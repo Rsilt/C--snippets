@@ -1,0 +1,59 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+/*#include <iostream> – See lisab sisend- ja väljundfunktsioonid, nagu cin ja cout, mis võimaldavad kasutajaga suhtlemist.
+#include <algorithm> – See lisab algoritmidega seotud funktsioonid, sealhulgas sort() funktsiooni, mida kasutatakse elementide sortimiseks.
+using namespace std; – See käsk lühendab koodis std:: kasutamist, nii et me saame kasutada näiteks cout ja cin otse, ilma std::cout kirjutamiseta.*/
+
+int main()
+{
+    int N, Q;
+    cin >> N >> Q; // Loeme mängijate arvu N ja plaanide arvu Q
+
+    /*int N, Q; – Deklareerib kaks täisarvutüüpi muutujat. N tähistab mängijate arvu ja Q tähistab plaanide arvu (kui mitu korda küsitakse vanuste alamhulga kohta).
+    cin >> N >> Q; – Loeb kaks täisarvu sisendist: N (mängijate arv) ja Q (plaanide arv).*/
+
+    int m[N], m2[N]; // Massiiv mängijate vanuste jaoks ja ajutine massiiv
+    for (int i = 0; i < N; i++)
+    {
+        cin >> m[i]; // Loeme mängijate vanused
+    }
+
+    /*int m[N], m2[N]; – Deklareerib kaks täisarvumassiivi. m hoiab mängijate vanuseid ning m2 on ajutine massiiv,
+     mida kasutatakse vanuste töötlemiseks. m2 saab plaanidesse kuuluvate mängijate vanuste koopiaid.
+     for (int i = 0; i < N; i++) { cin >> m[i]; } – Tsükkel loeb mängijate vanused sisse ja salvestab need massiivi
+      m. cin >> m[i]; loeb iga mängija vanuse ja talletab selle indeksisse i massiivis.
+    */
+
+    for (int k = 0; k < Q; k++)
+    {
+        int alates, kuni;
+        cin >> alates >> kuni; // Loeme iga plaani jaoks L ja R väärtused
+
+        /*for (int k = 0; k < Q; k++) – See tsükkel kordub Q korda. Iga tsükli käigus töötatakse ühe plaaniga, mis valib kindla hulga mängijaid.
+        int alates, kuni; cin >> alates >> kuni; – Loeb kaks täisarvu: alates ja kuni. Need tähistavad indekseid vahemikust,
+         kust me võtame mängijate vanuseid (need on ilmselt mängijate loendi alguse ja lõpu indeksid).*/
+
+        // Kopeerime plaanis valitud mängijate vanused ajutisse massiivi
+        for (int i = alates; i <= kuni; i++)
+        {
+            m2[i] = m[i];
+        }
+        /*for (int i = alates; i <= kuni; i++) – Tsükkel, mis kopeerib vanused massiivist m ajutisse massiivi m2.
+         See kopeerib mängijate vanused vahemikus alates kuni kuni (kaasa arvatud).*/
+
+        // Sorteerime mängijate vanused ajutises massiivis, et leida 11 noorimat
+        sort(m2 + alates, m2 + kuni + 1);
+
+        /*sort(m2 + alates, m2 + kuni + 1); – Sorteerib mängijate vanused massiivis m2 vahemikus alates kuni kuni. sort() funktsioon sorteerib
+         väärtused kasvavas järjekorras.*/
+
+        // Väljastame 11 noorima mängija vanima vanuse (see on indeksis alates+10)
+        cout << m2[alates + 10] << endl;
+    }
+    /*<< m2[alates + 10] << endl; – Väljastab vanuse, mis asub massiivi m2 indeksis alates + 10. Kuna massiiv on sorteeritud,
+     siis see on 11. noorima mängija vanus.
+    Eeldatakse, et alati on vähemalt 11 mängijat igas plaanis.*/
+    return 0;
+}

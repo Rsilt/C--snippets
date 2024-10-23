@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+std::vector<int> noorim_algkoosseis(int N, int Q, std::vector<int> vanused, std::vector<std::pair<int, int>> plaanid)
+{
+    std::vector<int> tulemused;
+    for (const auto &[L, R] : plaanid)
+    {
+        // Võtame mängijad vahemikust L kuni R
+        std::vector<int> valitud_mängijad(vanused.begin() + L, vanused.begin() + R + 1);
+        std::sort(valitud_mängijad.begin(), valitud_mängijad.end());
+        std::vector<int> noorimad(valitud_mängijad.begin(), valitud_mängijad.begin() + std::min(11, (int)valitud_mängijad.size()));
+        tulemused.push_back(*std::max_element(noorimad.begin(), noorimad.end()));
+    }
+    return tulemused;
+}
+
+int main()
+{
+    // Andmed
+    int N = 13;
+    int Q = 6;
+    std::vector<int> vanused = {38, 21, 20, 29, 22, 26, 22, 35, 34, 21, 22, 28, 35};
+    std::vector<std::pair<int, int>> plaanid = {{0, 10}, {0, 11}, {0, 12}, {1, 11}, {1, 12}, {2, 12}};
+
+    std::vector<int> tulemused = noorim_algkoosseis(N, Q, vanused, plaanid);
+    for (const auto &tulemus : tulemused)
+    {
+        std::cout << tulemus << std::endl;
+    }
+
+    return 0;
+}
